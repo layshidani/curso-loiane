@@ -1,23 +1,65 @@
-<h1>Data Driven Form</h1>
+<h1>Template Driven Form</h1>
 
 <form #f="ngForm" (ngSubmit)="onSubmit(f)">
 
-  <div class="form-group">
+  <div
+   class="form-group"
+   [class.has-error]="!name.valid && name.touched"
+   [class.has-feedback]="!name.valid && name.touched"
+  >
     <label for="name">Nome</label>
-    <input type="text" name="name" id="nome" class="form-control" placeholder="Nome completo" [ngModel]="user.name">
+    <input type="text" name="name" id="name" class="form-control" placeholder="Nome completo" [(ngModel)]="user.name" required minlength="3" #name="ngModel">
+
+    <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"*ngIf="!name.valid && name.touched"></span>
+    <span id="name" class="sr-only" *ngIf="!name.valid && name.touched"></span>
+
+    <div
+     *ngIf="!name.valid && name.touched"
+     class="alert alert-danger"
+     role="alert"
+     >
+      nome inválido
+    </div>
   </div>
 
-  <div class="form-group">
+  <div class="form-group"
+    [class.has-error]="!email.valid && email.touched"
+    [class.has-feedback]="!email.valid && email.touched">
     <label for="email">Email</label>
-    <input type="email" name="email" id="email" class="form-control" placeholder="seu@email.com" [ngModel]="user.email">
+    <input type="text" name="email" id="email" class="form-control" placeholder="seu@email.com" [(ngModel)]="user.email"
+      required minlength="3" #email="ngModel">
+
+    <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+      *ngIf="!email.valid && email.touched"></span>
+    <span id="email" class="sr-only" *ngIf="!email.valid && email.touched"></span>
+
+    <div *ngIf="!email.valid && email.touched" class="alert alert-danger" role="alert">
+      email inválido
+    </div>
   </div>
 
-  <div class="form-group">
+  <div class="form-group"
+    [class.has-error]="!country.valid && country.touched"
+    [class.has-feedback]="!country.valid && country.touched">
     <label for="userCountry">País</label>
     <input type="text" class="form-control" id="userState" name="userState" placeholder="Informe seu país"
-      [(ngModel)]="user.country" />
+      [(ngModel)]="user.country" required #country="ngModel">
+
+    <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"
+      *ngIf="!country.valid && country.touched"></span>
+    <span id="country" class="sr-only" *ngIf="!country.valid && country.touched"></span>
+
+    <div *ngIf="!country.valid && country.touched" class="alert alert-danger" role="alert">
+      país inválido
+    </div>
   </div>
 
-  <button type="submit" class="btn btn-primary">Enviar</button>
+  <button
+   type="submit"
+   class="btn btn-primary"
+   [disabled]="!f.valid"
+  >
+    Enviar
+  </button>
 
 </form>
