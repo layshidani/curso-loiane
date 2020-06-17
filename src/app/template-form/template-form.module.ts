@@ -4,6 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { TemplateFormComponent } from './template-form.component';
+import { FormDebugComponent } from '../form-debug/form-debug.component';
+
 
 @NgModule({
   imports: [
@@ -13,7 +15,8 @@ import { TemplateFormComponent } from './template-form.component';
     ReactiveFormsModule,
   ],
   declarations: [
-    TemplateFormComponent
+    FormDebugComponent,
+    TemplateFormComponent,
   ]
 })
 export class TemplateFormModule { }

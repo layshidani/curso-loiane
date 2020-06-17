@@ -1,0 +1,35 @@
+<div>
+  Detalhes:
+</div>
+
+<div class="card" style="margin-top: 20px; background-color: aliceblue;" *ngIf="form">
+
+  <div class="card-body">
+    <pre>
+      form válido: {{ form.valid }}
+    </pre>
+  </div>
+
+</div>
+
+<div class="card" style="margin-top: 20px; background-color: aliceblue;" *ngIf="form">
+
+  <div class="card-body">
+    <pre>
+      form submetido: {{ form.submitted }}
+    </pre>
+  </div>
+
+</div>
+
+<div class="card" style="margin-top: 20px; background-color: aliceblue;" *ngIf="form">
+
+  <div class="card-body">
+    <pre>
+      valores:
+      <br>
+      {{ form.value | json }}
+    </pre>
+  </div>
+
+</div>
