@@ -31,14 +31,15 @@
     </div>
   </div>
 
-  <div ngModelGroup="endereco">
+  <div ngModelGroup="address">
 
     <div class="form-group">
 
       <div class="col-md-3" [ngClass]="applyCssError(cep)">
         <label for="cep" class="control-label">CEP</label>
         <input type="text" class="form-control" id="cep" name="cep" ngModel required #cep="ngModel"
-          >
+        (blur)="handleCEP($event.target.value, f)"
+        >
         <app-field-control-error [showError]="verifyValidTouched(cep)" errorMsg="CEP é obrigatório.">
         </app-field-control-error>
       </div>
