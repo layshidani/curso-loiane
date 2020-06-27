@@ -3,24 +3,22 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
+import { SharedModule } from './../shared/shared.module';
+
 import { SearchCEPService } from './../shared/services/search-cep.service';
 
-import { FormDebugComponent } from '../form-debug/form-debug.component';
 import { TemplateFormComponent } from './template-form.component';
-import { FieldControlErrorComponent } from './../field-control-error/field-control-error.component';
-
 
 @NgModule({
   imports: [
     FormsModule,
     CommonModule,
+    SharedModule,
     HttpClientModule,
     ReactiveFormsModule,
   ],
   declarations: [
-    FormDebugComponent,
     TemplateFormComponent,
-    FieldControlErrorComponent,
   ],
   providers: [
     SearchCEPService,
