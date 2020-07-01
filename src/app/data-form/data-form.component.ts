@@ -1,3 +1,5 @@
+import { HttpClient } from '@angular/common/http';
+import { SearchCEPService } from './../shared/services/search-cep.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 
@@ -12,7 +14,9 @@ export class DataFormComponent implements OnInit {
   formulary: FormGroup;
 
   constructor(
+    private http: HttpClient,
     private formBuilder: FormBuilder,
+    private cepService: SearchCEPService,
   ) { }
 
   ngOnInit(): void {
@@ -26,6 +30,17 @@ export class DataFormComponent implements OnInit {
       name: ['nome'],
       email: ['email@email.com']
     })
+  }
+
+  onSubmit() {
+    console.log('form', this.formulary);
+
+    this.http.post('https://httpbin.org/post', JSON.stringify(this.formulary.value))
+      .subscribe(dados => {
+        console.log(dados);
+        this.formulary.reset();
+      },
+      (error: any) => alert('erro'));
   }
 
 }
