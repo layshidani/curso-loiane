@@ -1,27 +1,42 @@
 <h1>Data Driven Form</h1>
 
 <form class="form-horizontal" [formGroup]="formulary" (ngSubmit)="onSubmit()">
-  <div class="form-group">
+  <div class="form-group" [ngClass]="applyCssError('name')">
 
     <div class="col-sm-12">
       <label for="name" class="control-label">name</label>
     </div>
 
     <div class="col-sm-12">
-      <input type="text" class="form-control" formControlName="name" id="name" placeholder="name">
+      <input type="text" class="form-control" formControlName="name" id="name" placeholder="seu nome">
+
+      <app-field-control-error [showError]="verifyValidTouched('name')" errorMsg="nome é obrigatório.">
+      </app-field-control-error>
     </div>
   </div>
 
-  <div class="form-group">
+  <div class="form-group" [ngClass]="applyCssError('email')">
     <div class="col-sm-12">
       <label for="email" class="control-label">Email</label>
     </div>
     <div class="col-sm-12">
-      <input type="email" class="form-control" formControlName="email" id="email">
+
+      <input type="email" class="form-control" formControlName="email" id="email" placeholder="seu email">
+
+      <app-field-control-error [showError]="verifyValidTouched('email')" errorMsg="email é obrigatório.">
+      </app-field-control-error>
+
+      <app-field-control-error [showError]="verifyInvalidEmail('email')" errorMsg="email inválido">
+      </app-field-control-error>
+
     </div>
   </div>
 
-  <button type="submit" class="btn btn-primary">Submit</button>
-
-  <app-form-debug [form]="formulary"></app-form-debug>
+  <div class="col-sm-12">
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </div>
 </form>
+
+<div class="col-sm-12">
+  <app-form-debug [form]="formulary"></app-form-debug>
+</div>

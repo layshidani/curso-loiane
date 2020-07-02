@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { SearchCEPService } from './../shared/services/search-cep.service';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
+import { SearchCEPService } from './../shared/services/search-cep.service';
 
 @Component({
   selector: 'app-data-form',
@@ -27,8 +27,8 @@ export class DataFormComponent implements OnInit {
     // });
 
     this.formulary = this.formBuilder.group({
-      name: ['nome'],
-      email: ['email@email.com']
+      name: [null, [Validators.required, Validators.minLength(3)]],
+      email: [null, [Validators.required, Validators.email]]
     })
   }
 
@@ -43,4 +43,23 @@ export class DataFormComponent implements OnInit {
       (error: any) => alert('erro'));
   }
 
+  verifyValidTouched(fieldName) {
+    // this.formulary.controls[fieldName] || this.formulary.get(fieldName)
+    return !this.formulary.get(fieldName).valid && this.formulary.get(fieldName).touched;
+  }
+
+  verifyInvalidEmail(fieldName) {
+    const emailField = this.formulary.get(fieldName);
+
+    if (emailField.errors) {
+      return emailField.errors['email'] && emailField.touched;
+    }
+  }
+
+  applyCssError(fieldName) {
+    return {
+      'has-error': this.verifyValidTouched(fieldName),
+      'has-feedback': this.verifyValidTouched(fieldName)
+    }
+  }
 }
