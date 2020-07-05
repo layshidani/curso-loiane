@@ -71,4 +71,41 @@ export class DataFormComponent implements OnInit {
       'has-feedback': this.verifyValidTouched(fieldName)
     }
   }
+
+
+  handleCEP() {
+    let cep = this.formulary.get('address.zipcode').value;
+    cep = cep.replace(/\D/g, '');
+
+    if (cep) {
+      this.resetForm();
+
+      this.cepService.searchCEP(cep)
+        .subscribe(data => this.populateForm(data));
+    }
+  }
+
+  populateForm(data) {
+    this.formulary.patchValue({
+      address: {
+        street: data.logradouro,
+        complement: data.complemento,
+        neightboor: data.bairro,
+        city: data.localidade,
+        state: data.uf
+      }
+    });
+  }
+
+  resetForm() {
+    this.formulary.patchValue({
+      address: {
+        street: null,
+        complement: null,
+        neightboor: null,
+        city: null,
+        state: null
+      }
+    });
+  }
 }
