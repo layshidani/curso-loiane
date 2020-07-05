@@ -2,6 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
+import { StateBR } from './../shared/models/state.model';
+
+import { DropdownService } from './../shared/services/dropdown.service';
 import { SearchCEPService } from './../shared/services/search-cep.service';
 
 @Component({
@@ -12,14 +15,20 @@ import { SearchCEPService } from './../shared/services/search-cep.service';
 export class DataFormComponent implements OnInit {
 
   formulary: FormGroup;
+  states: StateBR[];
 
   constructor(
     private http: HttpClient,
     private formBuilder: FormBuilder,
     private cepService: SearchCEPService,
+    private dropdownService: DropdownService,
   ) { }
 
   ngOnInit(): void {
+    this.dropdownService.getStates().subscribe(data => {
+      this.states = data;
+    });
+
     // com formGroup
     // this.formulary = new FormGroup({
     //   name: new FormControl('Seu nome'),
@@ -44,12 +53,27 @@ export class DataFormComponent implements OnInit {
   onSubmit() {
     console.log('form', this.formulary);
 
-    this.http.post('https://httpbin.org/post', JSON.stringify(this.formulary.value))
-      .subscribe(dados => {
-        console.log(dados);
-        this.formulary.reset();
-      },
-      (error: any) => alert('erro'));
+    if (this.formulary.valid) {
+      this.http.post('https://httpbin.org/post', JSON.stringify(this.formulary.value))
+        .subscribe(dados => {
+          console.log(dados);
+          this.formulary.reset();
+        },
+        (error: any) => alert('erro'));
+    } else {
+      this.verifyFormsValidations(this.formulary);
+    }
+  }
+
+  verifyFormsValidations(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach(field => {
+      const control = formGroup.get(field);
+      control.markAsTouched();
+
+      if (control instanceof FormGroup) {
+        this.verifyFormsValidations(control);
+      }
+    })
   }
 
   verifyValidTouched(fieldName) {

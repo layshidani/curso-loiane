@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { FormDebugComponent } from './form-debug/form-debug.component';
 import { FieldControlErrorComponent } from './field-control-error/field-control-error.component';
 
+import { DropdownService } from './services/dropdown.service';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,9 @@ import { FieldControlErrorComponent } from './field-control-error/field-control-
   exports: [
     FormDebugComponent,
     FieldControlErrorComponent,
+  ],
+  providers: [
+    DropdownService
   ]
 })
 export class SharedModule { }
