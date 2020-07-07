@@ -17,6 +17,7 @@ export class DataFormComponent implements OnInit {
 
   formulary: FormGroup;
   states: Observable<StateBR[]>;
+  roles: any[];
 
   constructor(
     private http: HttpClient,
@@ -27,6 +28,8 @@ export class DataFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.states = this.dropdownService.getStates();
+
+    this.roles = this.dropdownService.getRoles();
 
     // com formGroup
     // this.formulary = new FormGroup({
@@ -46,6 +49,9 @@ export class DataFormComponent implements OnInit {
         city: [null, Validators.required],
         state: [null, Validators.required],
       }),
+      roles: [
+        null
+      ]
     })
   }
 
@@ -129,5 +135,14 @@ export class DataFormComponent implements OnInit {
         state: null
       }
     });
+  }
+
+  setRole() {
+    const role = { nome: 'Dev2', nivel: 'Pleno', desc: 'Dev Pl' };
+    this.formulary.get('roles').setValue(role);
+  }
+
+  compareRole(obj1, obj2) {
+    return obj1 && obj2 ? (obj1.nivel === obj2.nivel) : obj1 === obj2
   }
 }

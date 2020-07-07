@@ -10,4 +10,12 @@ export class DropdownService {
   getStates() {
     return this.http.get<StateBR[]>('assets/data/states.json');
   }
+
+  getRoles() {
+    return [
+      { nome: 'Dev1', nivel: 'Junior', desc: 'Dev Jr' },
+      { nome: 'Dev2', nivel: 'Pleno', desc: 'Dev Pl' },
+      { nome: 'Dev3', nivel: 'Senior', desc: 'Dev Sr' }
+    ];
+  }
 }
