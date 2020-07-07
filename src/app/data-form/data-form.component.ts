@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 import { StateBR } from './../shared/models/state.model';
 
@@ -15,7 +16,7 @@ import { SearchCEPService } from './../shared/services/search-cep.service';
 export class DataFormComponent implements OnInit {
 
   formulary: FormGroup;
-  states: StateBR[];
+  states: Observable<StateBR[]>;
 
   constructor(
     private http: HttpClient,
@@ -25,9 +26,7 @@ export class DataFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.dropdownService.getStates().subscribe(data => {
-      this.states = data;
-    });
+    this.states = this.dropdownService.getStates();
 
     // com formGroup
     // this.formulary = new FormGroup({
@@ -99,7 +98,6 @@ export class DataFormComponent implements OnInit {
 
   handleCEP() {
     let cep = this.formulary.get('address.zipcode').value;
-    cep = cep.replace(/\D/g, '');
 
     if (cep) {
       this.resetForm();

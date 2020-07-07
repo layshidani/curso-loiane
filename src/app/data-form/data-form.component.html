@@ -90,7 +90,9 @@
 
       <div class="col-md-3" [ngClass]="applyCssError('address.state')">
         <label for="state" class="control-label">Estado</label>
-        <input type="text" class="form-control" id="state" formControlName="state">
+        <select class="form-control" id="state" formControlName="state">
+          <option *ngFor="let state of states | async" [value]="state.sigla">{{ state.name }}</option>
+        </select>
         <app-field-control-error [showError]="verifyValidTouched('address.state')" errorMsg="Estado é obrigatório.">
         </app-field-control-error>
       </div>
