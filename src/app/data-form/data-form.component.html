@@ -109,6 +109,15 @@
       <app-field-control-error [showError]="verifyValidTouched('roles')" errorMsg="campo obrigatório.">
       </app-field-control-error>
     </div>
+
+    <div class="col-md-3" [ngClass]="applyCssError('technologies')">
+      <label for="technologies" class="control-label">Tecnologias</label>
+      <select multiple class="form-control" id="technologies" formControlName="technologies" [compareWith]="comparetechnology">
+        <option *ngFor="let technology of technologies" [ngValue]="technology.name">{{ technology.desc }}</option>
+      </select>
+      <app-field-control-error [showError]="verifyValidTouched('technologies')" errorMsg="campo obrigatório.">
+      </app-field-control-error>
+    </div>
   </div>
 
   <div class="col-sm-12">
@@ -126,6 +135,11 @@
       class="btn btn-secondary"
       (click)="setRole()"
     >Cargo default</button>
+
+    <button
+      class="btn btn-secondary"
+      (click)="setTechnology()"
+    >Tecnologias default</button>
 
   </div>
 </form>

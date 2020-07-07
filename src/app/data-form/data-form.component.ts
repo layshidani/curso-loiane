@@ -18,6 +18,7 @@ export class DataFormComponent implements OnInit {
   formulary: FormGroup;
   states: Observable<StateBR[]>;
   roles: any[];
+  technologies: any[];
 
   constructor(
     private http: HttpClient,
@@ -28,8 +29,8 @@ export class DataFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.states = this.dropdownService.getStates();
-
     this.roles = this.dropdownService.getRoles();
+    this.technologies = this.dropdownService.getTechnologies();
 
     // com formGroup
     // this.formulary = new FormGroup({
@@ -51,7 +52,10 @@ export class DataFormComponent implements OnInit {
       }),
       roles: [
         null
-      ]
+      ],
+      technologies: [
+        null
+      ],
     })
   }
 
@@ -133,7 +137,13 @@ export class DataFormComponent implements OnInit {
         neightboor: null,
         city: null,
         state: null
-      }
+      },
+      roles: [
+        null
+      ],
+      technologies: [
+        null
+      ]
     });
   }
 
@@ -143,6 +153,14 @@ export class DataFormComponent implements OnInit {
   }
 
   compareRole(obj1, obj2) {
-    return obj1 && obj2 ? (obj1.nivel === obj2.nivel) : obj1 === obj2
+    return obj1 && obj2 ? (obj1.nivel === obj2.nivel) : obj1 === obj2;
+  }
+
+  setTechnology() {
+    this.formulary.get('technologies').setValue(['Ruby', 'JavaScript']);
+  }
+
+  comparetechnology(obj1, obj2) {
+    return obj1 && obj2 ? (obj1.nome === obj2.nome) : obj1 === obj2
   }
 }
