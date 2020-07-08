@@ -38,13 +38,7 @@
 
       <div class="col-md-3" [ngClass]="applyCssError('address.zipcode')">
         <label for="zipcode" class="control-label">CEP</label>
-        <input
-         type="text"
-         class="form-control"
-         id="zipcode"
-         formControlName="zipcode"
-         (blur)="handleCEP()"
-         >
+        <input type="text" class="form-control" id="zipcode" formControlName="zipcode" (blur)="handleCEP()">
         <app-field-control-error [showError]="verifyValidTouched('address.zipcode')" errorMsg="CEP é obrigatório.">
         </app-field-control-error>
       </div>
@@ -77,7 +71,8 @@
       <div class="col-md-5" [ngClass]="applyCssError('address.neightboor')">
         <label for="neightboor" class="control-label">Bairro</label>
         <input type="text" class="form-control" id="neightboor" formControlName="neightboor">
-        <app-field-control-error [showError]="verifyValidTouched('address.neightboor')" errorMsg="Bairro é obrigatório.">
+        <app-field-control-error [showError]="verifyValidTouched('address.neightboor')"
+          errorMsg="Bairro é obrigatório.">
         </app-field-control-error>
       </div>
 
@@ -112,34 +107,41 @@
 
     <div class="col-md-3" [ngClass]="applyCssError('technologies')">
       <label for="technologies" class="control-label">Tecnologias</label>
-      <select multiple class="form-control" id="technologies" formControlName="technologies" [compareWith]="comparetechnology">
+      <select multiple class="form-control" id="technologies" formControlName="technologies"
+        [compareWith]="comparetechnology">
         <option *ngFor="let technology of technologies" [ngValue]="technology.name">{{ technology.desc }}</option>
       </select>
       <app-field-control-error [showError]="verifyValidTouched('technologies')" errorMsg="campo obrigatório.">
       </app-field-control-error>
     </div>
+
+    <div class="col-md-3" [ngClass]="applyCssError('newsletter')">
+      <label for="newsletter" class="control-label">NewsLetter</label>
+
+      <div id="newsletter" class="row">
+          <div class="col-sm-4" *ngFor="let option of newsletter">
+
+            <input class="form-check-input" type="radio" formControlName="newsletter" [value]="option.valor">
+
+            <label class="form-check-label">
+              {{ option.desc }}
+            </label>
+        </div>
+      </div>
+      <app-field-control-error [showError]="verifyValidTouched('newsletter')" errorMsg="campo obrigatório.">
+      </app-field-control-error>
+    </div>
+
   </div>
 
   <div class="col-sm-12">
-    <button
-      type="submit"
-      class="btn btn-primary"
-    >Submit</button>
+    <button type="submit" class="btn btn-primary">Submit</button>
 
-    <button
-      class="btn btn-warning"
-      (click)="resetForm()"
-    >Limpar formulário</button>
+    <button class="btn btn-warning" (click)="resetForm()">Limpar formulário</button>
 
-    <button
-      class="btn btn-secondary"
-      (click)="setRole()"
-    >Cargo default</button>
+    <button class="btn btn-secondary" (click)="setRole()">Cargo default</button>
 
-    <button
-      class="btn btn-secondary"
-      (click)="setTechnology()"
-    >Tecnologias default</button>
+    <button class="btn btn-secondary" (click)="setTechnology()">Tecnologias default</button>
 
   </div>
 </form>

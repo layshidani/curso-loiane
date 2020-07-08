@@ -19,6 +19,7 @@ export class DataFormComponent implements OnInit {
   states: Observable<StateBR[]>;
   roles: any[];
   technologies: any[];
+  newsletter: any[];
 
   constructor(
     private http: HttpClient,
@@ -31,6 +32,7 @@ export class DataFormComponent implements OnInit {
     this.states = this.dropdownService.getStates();
     this.roles = this.dropdownService.getRoles();
     this.technologies = this.dropdownService.getTechnologies();
+    this.newsletter = this.dropdownService.getNewsletter();
 
     // com formGroup
     // this.formulary = new FormGroup({
@@ -56,6 +58,9 @@ export class DataFormComponent implements OnInit {
       technologies: [
         null
       ],
+      newsletter: [
+        null
+      ]
     })
   }
 
@@ -143,7 +148,10 @@ export class DataFormComponent implements OnInit {
       ],
       technologies: [
         null
-      ]
+      ],
+      newsletter: [
+        null
+      ],
     });
   }
 
