@@ -60,7 +60,11 @@ export class DataFormComponent implements OnInit {
       ],
       newsletter: [
         null
-      ]
+      ],
+      terms: [
+        null,
+        Validators.pattern('true')
+      ],
     })
   }
 
@@ -152,6 +156,9 @@ export class DataFormComponent implements OnInit {
       newsletter: [
         null
       ],
+      terms: [
+        null
+      ]
     });
   }
 

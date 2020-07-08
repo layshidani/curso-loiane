@@ -131,7 +131,17 @@
       <app-field-control-error [showError]="verifyValidTouched('newsletter')" errorMsg="campo obrigatório.">
       </app-field-control-error>
     </div>
+  </div>
 
+  <div class="form-group" [ngClass]="applyCssError('terms')">
+    <div class="col-md-3 has-error">
+      <div class="checkbox">
+        <input type="checkbox" formControlName="terms" id="termos">
+        <label for="termos" class="checkbox-inline">Aceito os termos</label>
+        <app-field-control-error [showError]="!formulary.get('terms').valid" errorMsg="campo obrigatório.">
+        </app-field-control-error>
+      </div>
+    </div>
   </div>
 
   <div class="col-sm-12">
