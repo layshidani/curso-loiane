@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 import { StateBR } from './../shared/models/state.model';
@@ -20,6 +20,7 @@ export class DataFormComponent implements OnInit {
   roles: any[];
   technologies: any[];
   newsletter: any[];
+  frameworks = ['Angular', 'React', 'Vue']
 
   constructor(
     private http: HttpClient,
@@ -65,11 +66,28 @@ export class DataFormComponent implements OnInit {
         null,
         Validators.pattern('true')
       ],
+      frameworks: this.buildFrameworks(),
     })
+  }
+
+  buildFrameworks() {
+    const values = this.frameworks.map(v => new FormControl(false));
+
+    return this.formBuilder.array(values);
   }
 
   onSubmit() {
     console.log('form', this.formulary);
+
+    let valueSubmit = Object.assign({}, this.formulary.value);
+
+    valueSubmit = Object.assign(valueSubmit, {
+      frameworks: valueSubmit.frameworks
+        .map((value, i) => value ? this.frameworks[i] : null)
+        .filter(item => item !== null)
+    });
+
+    console.log('valueSubmit', valueSubmit);
 
     if (this.formulary.valid) {
       this.http.post('https://httpbin.org/post', JSON.stringify(this.formulary.value))
@@ -158,7 +176,8 @@ export class DataFormComponent implements OnInit {
       ],
       terms: [
         null
-      ]
+      ],
+      frameworks: [null],
     });
   }
 

@@ -133,6 +133,24 @@
     </div>
   </div>
 
+  <div class="form-group" [ngClass]="applyCssError('frameworks')">
+    <label for="frameworks">Frameworks</label>
+    <div id="frameworks" class="row">
+        <div class="checkbox col-sm-4" formArrayName="frameworks" *ngFor="let item of formulary.get('frameworks').controls; let i = index">
+
+
+          <label for="frameworks" class="checkbox-inline">
+            <input type="checkbox" formControlName="framework" id="framework"
+            [formControlName]="i"
+            >
+            {{ frameworks[i] }}
+          </label>
+
+      </div>
+
+    </div>
+  </div>
+
   <div class="form-group" [ngClass]="applyCssError('terms')">
     <div class="col-md-3 has-error">
       <div class="checkbox">
