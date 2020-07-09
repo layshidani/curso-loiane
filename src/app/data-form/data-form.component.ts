@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 import { StateBR } from './../shared/models/state.model';
 
 import { DropdownService } from './../shared/services/dropdown.service';
 import { SearchCEPService } from './../shared/services/search-cep.service';
+import { FormValidations } from '../shared/form-validarions';
 
 @Component({
   selector: 'app-data-form',
@@ -73,8 +74,9 @@ export class DataFormComponent implements OnInit {
   buildFrameworks() {
     const values = this.frameworks.map(v => new FormControl(false));
 
-    return this.formBuilder.array(values);
+    return this.formBuilder.array(values, FormValidations.requiredMinCheckbox(1));
   }
+
 
   onSubmit() {
     console.log('form', this.formulary);

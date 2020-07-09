@@ -119,13 +119,13 @@
       <label for="newsletter" class="control-label">NewsLetter</label>
 
       <div id="newsletter" class="row">
-          <div class="col-sm-4" *ngFor="let option of newsletter">
+        <div class="col-sm-4" *ngFor="let option of newsletter">
 
-            <input class="form-check-input" type="radio" formControlName="newsletter" [value]="option.valor">
+          <input class="form-check-input" type="radio" formControlName="newsletter" [value]="option.valor">
 
-            <label class="form-check-label">
-              {{ option.desc }}
-            </label>
+          <label class="form-check-label">
+            {{ option.desc }}
+          </label>
         </div>
       </div>
       <app-field-control-error [showError]="verifyValidTouched('newsletter')" errorMsg="campo obrigatório.">
@@ -136,17 +136,16 @@
   <div class="form-group" [ngClass]="applyCssError('frameworks')">
     <label for="frameworks">Frameworks</label>
     <div id="frameworks" class="row">
-        <div class="checkbox col-sm-4" formArrayName="frameworks" *ngFor="let item of formulary.get('frameworks').controls; let i = index">
+      <div class="checkbox col-sm-4" formArrayName="frameworks"
+        *ngFor="let item of formulary.get('frameworks')['controls']; let i = index">
 
-
-          <label for="frameworks" class="checkbox-inline">
-            <input type="checkbox" formControlName="framework" id="framework"
-            [formControlName]="i"
-            >
-            {{ frameworks[i] }}
-          </label>
-
+        <label for="frameworks" class="checkbox-inline">
+          <input type="checkbox" formControlName="framework" id="framework" [formControlName]="i">
+          {{ frameworks[i] }}
+        </label>
       </div>
+      <app-field-control-error [showError]="!formulary.get('frameworks').valid" errorMsg="selecione pelo menos 1 opção">
+      </app-field-control-error>
 
     </div>
   </div>
