@@ -37,10 +37,17 @@
     <div class="form-group">
 
       <div class="col-md-3" [ngClass]="applyCssError('address.zipcode')">
+
         <label for="zipcode" class="control-label">CEP</label>
+
         <input type="text" class="form-control" id="zipcode" formControlName="zipcode" (blur)="handleCEP()">
+
         <app-field-control-error [showError]="verifyValidTouched('address.zipcode')" errorMsg="CEP é obrigatório.">
         </app-field-control-error>
+
+        <app-field-control-error [showError]="this.formulary.get('address.zipcode').hasError('invalidCep')" errorMsg="CEP inválido.">
+        </app-field-control-error>
+
       </div>
 
       <div class="col-md-3" [ngClass]="applyCssError('address.number')">
