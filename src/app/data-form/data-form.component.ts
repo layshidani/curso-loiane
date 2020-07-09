@@ -45,6 +45,7 @@ export class DataFormComponent implements OnInit {
     this.formulary = this.formBuilder.group({
       name: [null, [Validators.required, Validators.minLength(3)]],
       email: [null, [Validators.required, Validators.email]],
+      emailConfirmation: [null, [FormValidations.equalsTo('email')]],
       address: this.formBuilder.group({
         zipcode: [null, [Validators.required, FormValidations.cepValidator]],
         number: [null, Validators.required],
@@ -167,6 +168,8 @@ export class DataFormComponent implements OnInit {
         city: null,
         state: null
       },
+      email: null,
+      emailConfirmation: null,
       roles: [
         null
       ],

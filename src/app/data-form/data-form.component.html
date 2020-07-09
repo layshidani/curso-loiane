@@ -32,6 +32,23 @@
     </div>
   </div>
 
+  <div class="form-group" [ngClass]="applyCssError('emailConfirmation')">
+    <div class="col-sm-12">
+      <label for="emailConfirmation" class="control-label">Confirme o email</label>
+    </div>
+    <div class="col-sm-12">
+
+      <input type="email" class="form-control" formControlName="emailConfirmation" id="emailConfirmation" placeholder="seu email">
+
+      <app-field-control-error [showError]="verifyValidTouched('emailConfirmation')" errorMsg="confirmar email é obrigatório.">
+      </app-field-control-error>
+
+      <app-field-control-error [showError]="formulary.get('emailConfirmation').hasError('notEqualsTo')" errorMsg="os emails informados não são iguais">
+      </app-field-control-error>
+
+    </div>
+  </div>
+
   <div formGroupName="address">
 
     <div class="form-group">
