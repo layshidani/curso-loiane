@@ -29,6 +29,12 @@
       <app-field-control-error [showError]="verifyInvalidEmail('email')" errorMsg="email inválido">
       </app-field-control-error>
 
+      <app-field-control-error [showError]="formulary.get('email').status === 'PENDING'" errorMsg="validando email">
+      </app-field-control-error>
+
+      <app-field-control-error [showError]="formulary.get('email').hasError('hasEmail')" errorMsg="email já cadastrado">
+      </app-field-control-error>
+
     </div>
   </div>
 

@@ -2,12 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { StateBR } from './../shared/models/state.model';
 
 import { DropdownService } from './../shared/services/dropdown.service';
 import { SearchCEPService } from './../shared/services/search-cep.service';
 import { FormValidations } from '../shared/form-validarions';
+import { VerifyEmailService } from './services/verify-email.service';
 
 @Component({
   selector: 'app-data-form',
@@ -28,6 +30,7 @@ export class DataFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     private cepService: SearchCEPService,
     private dropdownService: DropdownService,
+    private emailVeriryService: VerifyEmailService,
   ) { }
 
   ngOnInit(): void {
@@ -40,11 +43,11 @@ export class DataFormComponent implements OnInit {
     // this.formulary = new FormGroup({
     //   name: new FormControl('Seu nome'),
     //   email: new FormControl('email@email.com'),
-    // });
+    // });  
 
     this.formulary = this.formBuilder.group({
       name: [null, [Validators.required, Validators.minLength(3)]],
-      email: [null, [Validators.required, Validators.email]],
+      email: [null, [Validators.required, Validators.email], [this.emailVerify.bind(this)]],
       emailConfirmation: [null, [FormValidations.equalsTo('email')]],
       address: this.formBuilder.group({
         zipcode: [null, [Validators.required, FormValidations.cepValidator]],
@@ -201,5 +204,12 @@ export class DataFormComponent implements OnInit {
 
   comparetechnology(obj1, obj2) {
     return obj1 && obj2 ? (obj1.nome === obj2.nome) : obj1 === obj2
+  }
+
+  emailVerify(formControl: FormControl){
+    return this.emailVeriryService.verifyEmail(formControl.value)
+      .pipe(
+        map(hasEmail => hasEmail ? { hasEmail: true } : null)
+      )
   }
 }
