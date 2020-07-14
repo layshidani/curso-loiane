@@ -43,10 +43,10 @@ export class DataFormComponent implements OnInit {
     // this.formulary = new FormGroup({
     //   name: new FormControl('Seu nome'),
     //   email: new FormControl('email@email.com'),
-    // });  
+    // });
 
     this.formulary = this.formBuilder.group({
-      name: [null, [Validators.required, Validators.minLength(3)]],
+      name: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(5)]],
       email: [null, [Validators.required, Validators.email], [this.emailVerify.bind(this)]],
       emailConfirmation: [null, [FormValidations.equalsTo('email')]],
       address: this.formBuilder.group({
