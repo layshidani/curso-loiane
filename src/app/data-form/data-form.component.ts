@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, empty } from 'rxjs';
+import { map, tap, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 import { StateBR } from './../shared/models/state.model';
 
@@ -73,6 +73,14 @@ export class DataFormComponent implements OnInit {
       ],
       frameworks: this.buildFrameworks(),
     })
+
+    this.formulary.get('address.zipcode').statusChanges
+      .pipe(
+        distinctUntilChanged(),
+        tap(value => console.log(value)),
+        switchMap(status => status === 'VALID' ? this.cepService.searchCEP(this.formulary.get('address.zipcode').value) : empty())
+      )
+      .subscribe(data => data ? this.populateForm(data) : {});
   }
 
   buildFrameworks() {

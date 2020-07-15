@@ -63,7 +63,7 @@
 
         <label for="zipcode" class="control-label">CEP</label>
 
-        <input type="text" class="form-control" id="zipcode" formControlName="zipcode" (blur)="handleCEP()">
+        <input type="text" class="form-control" id="zipcode" formControlName="zipcode">
 
         <app-field-control-error [showError]="verifyValidTouched('address.zipcode')" errorMsg="CEP é obrigatório.">
         </app-field-control-error>
