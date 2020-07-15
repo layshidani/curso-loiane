@@ -23,17 +23,8 @@
 
       <input type="email" class="form-control" formControlName="email" id="email" placeholder="seu email">
 
-      <app-field-control-error [showError]="verifyValidTouched('email')" errorMsg="email é obrigatório.">
-      </app-field-control-error>
-
-      <app-field-control-error [showError]="verifyInvalidEmail('email')" errorMsg="email inválido">
-      </app-field-control-error>
-
-      <app-field-control-error [showError]="formulary.get('email').status === 'PENDING'" errorMsg="validando email">
-      </app-field-control-error>
-
-      <app-field-control-error [showError]="formulary.get('email').hasError('hasEmail')" errorMsg="email já cadastrado">
-      </app-field-control-error>
+      <app-error-msg [control]="formulary.get('email')" label="email">
+      </app-error-msg>
 
     </div>
   </div>
@@ -46,12 +37,8 @@
 
       <input type="email" class="form-control" formControlName="emailConfirmation" id="emailConfirmation" placeholder="seu email">
 
-      <app-field-control-error [showError]="verifyValidTouched('emailConfirmation')" errorMsg="confirmar email é obrigatório.">
-      </app-field-control-error>
-
-      <app-field-control-error [showError]="formulary.get('emailConfirmation').hasError('notEqualsTo')" errorMsg="os emails informados não são iguais">
-      </app-field-control-error>
-
+      <app-error-msg [control]="formulary.get('emailConfirmation')" label="confirmação email">
+      </app-error-msg>
     </div>
   </div>
 
@@ -65,19 +52,17 @@
 
         <input type="text" class="form-control" id="zipcode" formControlName="zipcode">
 
-        <app-field-control-error [showError]="verifyValidTouched('address.zipcode')" errorMsg="CEP é obrigatório.">
-        </app-field-control-error>
-
-        <app-field-control-error [showError]="this.formulary.get('address.zipcode').hasError('invalidCep')" errorMsg="CEP inválido.">
-        </app-field-control-error>
+        <app-error-msg [control]="formulary.get('address.zipcode')" label="cep">
+        </app-error-msg>
 
       </div>
 
       <div class="col-md-3" [ngClass]="applyCssError('address.number')">
         <label for="number" class="control-label">Número</label>
         <input type="text" class="form-control" id="number" formControlName="number">
-        <app-field-control-error [showError]="verifyValidTouched('address.number')" errorMsg="Número é obrigatório.">
-        </app-field-control-error>
+
+        <app-error-msg [control]="formulary.get('address.number')" label="Número">
+        </app-error-msg>
       </div>
 
       <div class="col-md-6">
@@ -92,8 +77,9 @@
         <label for="street" class="control-label">Rua</label>
         <input type="text" class="form-control" name="street" id="street" formControlName="street">
 
-        <app-field-control-error [showError]="verifyValidTouched('address.street')" errorMsg="Rua é obrigatório.">
-        </app-field-control-error>
+        <app-error-msg [control]="formulary.get('address.street')" label="Rua">
+        </app-error-msg>
+
       </div>
     </div>
 
@@ -101,16 +87,19 @@
       <div class="col-md-5" [ngClass]="applyCssError('address.neightboor')">
         <label for="neightboor" class="control-label">Bairro</label>
         <input type="text" class="form-control" id="neightboor" formControlName="neightboor">
-        <app-field-control-error [showError]="verifyValidTouched('address.neightboor')"
-          errorMsg="Bairro é obrigatório.">
-        </app-field-control-error>
+
+        <app-error-msg [control]="formulary.get('address.neightboor')" label="Bairro">
+        </app-error-msg>
+
       </div>
 
       <div class="col-md-4" [ngClass]="applyCssError('address.city')">
         <label for="city" class="control-label">Cidade</label>
         <input type="text" class="form-control" id="city" formControlName="city">
-        <app-field-control-error [showError]="verifyValidTouched('address.city')" errorMsg="Cidade é obrigatório.">
-        </app-field-control-error>
+
+        <app-error-msg [control]="formulary.get('address.city')" label="Cidade">
+        </app-error-msg>
+
       </div>
 
       <div class="col-md-3" [ngClass]="applyCssError('address.state')">
@@ -118,8 +107,10 @@
         <select class="form-control" id="state" formControlName="state">
           <option *ngFor="let state of states | async" [value]="state.sigla">{{ state.name }}</option>
         </select>
-        <app-field-control-error [showError]="verifyValidTouched('address.state')" errorMsg="Estado é obrigatório.">
-        </app-field-control-error>
+
+        <app-error-msg [control]="formulary.get('address.state')" label="Estado">
+        </app-error-msg>
+
       </div>
     </div>
 
@@ -131,8 +122,10 @@
       <select class="form-control" id="role" formControlName="roles" [compareWith]="compareRole">
         <option *ngFor="let role of roles" [ngValue]="role">{{ role.desc }}</option>
       </select>
-      <app-field-control-error [showError]="verifyValidTouched('roles')" errorMsg="campo obrigatório.">
-      </app-field-control-error>
+
+      <app-error-msg [control]="formulary.get('roles')" label="Cargos">
+      </app-error-msg>
+
     </div>
 
     <div class="col-md-3" [ngClass]="applyCssError('technologies')">
@@ -141,8 +134,10 @@
         [compareWith]="comparetechnology">
         <option *ngFor="let technology of technologies" [ngValue]="technology.name">{{ technology.desc }}</option>
       </select>
-      <app-field-control-error [showError]="verifyValidTouched('technologies')" errorMsg="campo obrigatório.">
-      </app-field-control-error>
+
+      <app-error-msg [control]="formulary.get('technologies')" label="Tecnologias">
+      </app-error-msg>
+
     </div>
 
     <div class="col-md-3" [ngClass]="applyCssError('newsletter')">
@@ -158,8 +153,10 @@
           </label>
         </div>
       </div>
-      <app-field-control-error [showError]="verifyValidTouched('newsletter')" errorMsg="campo obrigatório.">
-      </app-field-control-error>
+
+      <app-error-msg [control]="formulary.get('newsletter')" label="NewsLetter">
+      </app-error-msg>
+
     </div>
   </div>
 
@@ -174,8 +171,9 @@
           {{ frameworks[i] }}
         </label>
       </div>
-      <app-field-control-error [showError]="!formulary.get('frameworks').valid" errorMsg="selecione pelo menos 1 opção">
-      </app-field-control-error>
+
+      <app-error-msg [control]="formulary.get('frameworks')" label="Framework">
+      </app-error-msg>
 
     </div>
   </div>
@@ -185,8 +183,9 @@
       <div class="checkbox">
         <input type="checkbox" formControlName="terms" id="termos">
         <label for="termos" class="checkbox-inline">Aceito os termos</label>
-        <app-field-control-error [showError]="!formulary.get('terms').valid" errorMsg="campo obrigatório.">
-        </app-field-control-error>
+
+        <app-error-msg [control]="formulary.get('terms')" label="Termo">
+        </app-error-msg>
       </div>
     </div>
   </div>
