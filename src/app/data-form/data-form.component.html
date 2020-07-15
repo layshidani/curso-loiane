@@ -1,19 +1,14 @@
 <h1>Data Driven Form</h1>
 
 <form class="form-horizontal" [formGroup]="formulary" (ngSubmit)="onSubmit()">
-  <div class="form-group" [ngClass]="applyCssError('name')">
 
-    <div class="col-sm-12">
-      <label for="name" class="control-label">Nome</label>
-    </div>
-
-    <div class="col-sm-12">
-      <input type="text" class="form-control" formControlName="name" id="name" placeholder="seu nome">
-
-      <app-error-msg [control]="formulary.get('name')" label="Nome">
-      </app-error-msg>
-    </div>
-  </div>
+  <app-input-field
+    id="name"
+    label="Nome"
+    formControlName="name"
+    [control]="formulary.get('name')"
+    [cssClass]="applyCssError('name')"
+  ></app-input-field>
 
   <div class="form-group" [ngClass]="applyCssError('email')">
     <div class="col-sm-12">

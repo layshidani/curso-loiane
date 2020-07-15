@@ -8,12 +8,14 @@ import { FieldControlErrorComponent } from './field-control-error/field-control-
 
 import { DropdownService } from './services/dropdown.service';
 import { ErrorMsgComponent } from './error-msg/error-msg.component';
+import { InputFieldComponent } from './input-field/input-field.component';
 
 @NgModule({
   declarations: [
     FormDebugComponent,
     FieldControlErrorComponent,
     ErrorMsgComponent,
+    InputFieldComponent,
   ],
   imports: [
     CommonModule,
@@ -25,6 +27,7 @@ import { ErrorMsgComponent } from './error-msg/error-msg.component';
     FormDebugComponent,
     FieldControlErrorComponent,
     ErrorMsgComponent,
+    InputFieldComponent,
   ],
   providers: [
     DropdownService
