@@ -6,6 +6,8 @@ import { map, tap, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 import { StateBR } from './../shared/models/state.model';
 
+import { BaseFormComponent } from './../shared/base-form/base-form.component';
+
 import { DropdownService } from './../shared/services/dropdown.service';
 import { SearchCEPService } from './../shared/services/search-cep.service';
 import { FormValidations } from '../shared/form-validarions';
@@ -16,9 +18,9 @@ import { VerifyEmailService } from './services/verify-email.service';
   templateUrl: './data-form.component.html',
   styleUrls: ['./data-form.component.css']
 })
-export class DataFormComponent implements OnInit {
+export class DataFormComponent extends BaseFormComponent implements OnInit {
 
-  formulary: FormGroup;
+  // formulary: FormGroup;
   states: Observable<StateBR[]>;
   roles: any[];
   technologies: any[];
@@ -31,7 +33,9 @@ export class DataFormComponent implements OnInit {
     private cepService: SearchCEPService,
     private dropdownService: DropdownService,
     private emailVeriryService: VerifyEmailService,
-  ) { }
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     this.states = this.dropdownService.getStates();
@@ -89,8 +93,7 @@ export class DataFormComponent implements OnInit {
     return this.formBuilder.array(values, FormValidations.requiredMinCheckbox(1));
   }
 
-
-  onSubmit() {
+  submit() {
     console.log('form', this.formulary);
 
     let valueSubmit = Object.assign({}, this.formulary.value);
@@ -103,32 +106,12 @@ export class DataFormComponent implements OnInit {
 
     console.log('valueSubmit', valueSubmit);
 
-    if (this.formulary.valid) {
-      this.http.post('https://httpbin.org/post', JSON.stringify(this.formulary.value))
-        .subscribe(dados => {
-          console.log(dados);
-          this.formulary.reset();
-        },
+    this.http.post('https://httpbin.org/post', JSON.stringify(this.formulary.value))
+      .subscribe(dados => {
+        console.log(dados);
+        this.formulary.reset();
+      },
         (error: any) => alert('erro'));
-    } else {
-      this.verifyFormsValidations(this.formulary);
-    }
-  }
-
-  verifyFormsValidations(formGroup: FormGroup) {
-    Object.keys(formGroup.controls).forEach(field => {
-      const control = formGroup.get(field);
-      control.markAsTouched();
-
-      if (control instanceof FormGroup) {
-        this.verifyFormsValidations(control);
-      }
-    })
-  }
-
-  verifyValidTouched(fieldName) {
-    // this.formulary.controls[fieldName] || this.formulary.get(fieldName)
-    return !this.formulary.get(fieldName).valid && this.formulary.get(fieldName).touched;
   }
 
   verifyInvalidEmail(fieldName) {
@@ -139,13 +122,9 @@ export class DataFormComponent implements OnInit {
     }
   }
 
-  applyCssError(fieldName) {
-    return {
-      'has-error': this.verifyValidTouched(fieldName),
-      'has-feedback': this.verifyValidTouched(fieldName)
-    }
+  getField(field: string) {
+    return this.formulary.get(field);
   }
-
 
   handleCEP() {
     let cep = this.formulary.get('address.zipcode').value;
@@ -214,7 +193,7 @@ export class DataFormComponent implements OnInit {
     return obj1 && obj2 ? (obj1.nome === obj2.nome) : obj1 === obj2
   }
 
-  emailVerify(formControl: FormControl){
+  emailVerify(formControl: FormControl) {
     return this.emailVeriryService.verifyEmail(formControl.value)
       .pipe(
         map(hasEmail => hasEmail ? { hasEmail: true } : null)
