@@ -1,3 +1,4 @@
+import { CityBR } from './../shared/models/city.model';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
@@ -21,7 +22,9 @@ import { VerifyEmailService } from './services/verify-email.service';
 export class DataFormComponent extends BaseFormComponent implements OnInit {
 
   // formulary: FormGroup;
-  states: Observable<StateBR[]>;
+  // states: Observable<StateBR[]>;
+  states: StateBR[];
+  cities: CityBR[];
   roles: any[];
   technologies: any[];
   newsletter: any[];
@@ -38,7 +41,8 @@ export class DataFormComponent extends BaseFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.states = this.dropdownService.getStates();
+    this.dropdownService.getStates()
+      .subscribe(data => this.states = data);
     this.roles = this.dropdownService.getRoles();
     this.technologies = this.dropdownService.getTechnologies();
     this.newsletter = this.dropdownService.getNewsletter();
@@ -85,6 +89,18 @@ export class DataFormComponent extends BaseFormComponent implements OnInit {
         switchMap(status => status === 'VALID' ? this.cepService.searchCEP(this.formulary.get('address.zipcode').value) : empty())
       )
       .subscribe(data => data ? this.populateForm(data) : {});
+
+    this.formulary.get('address.state').valueChanges
+      .pipe(
+        tap(estado => console.log(estado)),
+        map(state => this.states.filter(s => s.sigla === state)),
+        map(states => states && states.length > 0 ? states[0].id : empty()),
+        switchMap((stateID: number) => this.dropdownService.getCities(stateID.toString())),
+        tap(console.log)
+      )
+      .subscribe(cities => this.cities = cities)
+
+    this.dropdownService.getCities('3').subscribe(data => console.log(data));
   }
 
   buildFrameworks() {
@@ -133,8 +149,9 @@ export class DataFormComponent extends BaseFormComponent implements OnInit {
       this.resetForm();
 
       this.cepService.searchCEP(cep)
-        .subscribe(data => this.populateForm(data));
+      .subscribe(data => this.populateForm(data));
     }
+
   }
 
   populateForm(data) {
@@ -199,4 +216,5 @@ export class DataFormComponent extends BaseFormComponent implements OnInit {
         map(hasEmail => hasEmail ? { hasEmail: true } : null)
       )
   }
+
 }
