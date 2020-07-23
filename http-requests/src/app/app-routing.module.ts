@@ -4,7 +4,10 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'cursos' },
-  { path: 'cursos', loadChildren: './courses/courses.module#CoursesModule' },
+  {
+    path: 'cursos',
+    loadChildren: () => import('./courses/courses.module').then(m => m.CoursesModule)
+   },
 ];
 
 @NgModule({
