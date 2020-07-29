@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+import { environment } from './../../environments/environment';
+
 import { tap } from 'rxjs/operators';
 
 import { Course } from './models/curso.model';
@@ -10,7 +12,7 @@ import { Course } from './models/curso.model';
 })
 export class CoursesService {
 
-  private readonly API = 'http://localhost:3000/cursos';
+  private readonly API = `${environment.API}cursos`;
 
   constructor(
     private http: HttpClient,
