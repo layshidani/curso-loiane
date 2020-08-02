@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, empty, Subject } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { AlertModalComponent } from '../../shared/alert-modal/alert-modal.component';
+import { AlertModalService } from '../../shared/alert-modal.service';
+
 import { Course } from './../models/curso.model';
 import { CoursesService } from './../courses.service';
 @Component({
@@ -16,6 +20,7 @@ export class CoursesListComponent implements OnInit {
 
   constructor(
     private service: CoursesService,
+    private alertService: AlertModalService,
   ) { }
 
   ngOnInit(): void {
@@ -28,9 +33,14 @@ export class CoursesListComponent implements OnInit {
         catchError(error => {
           console.error(error);
           this.error$.next(true);
+          this.handleError();
           return empty();
         })
       );
+  }
+
+  handleError() {
+    this.alertService.showAlertDanger('Erro ao carregar cursos. Tente novamente mais tarde.');
   }
 
 }
