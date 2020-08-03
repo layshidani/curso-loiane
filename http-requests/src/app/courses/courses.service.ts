@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { environment } from './../../environments/environment';
 
-import { tap, delay } from 'rxjs/operators';
+import { tap, take, delay } from 'rxjs/operators';
 
 import { Course } from './models/curso.model';
 
@@ -24,5 +24,9 @@ export class CoursesService {
         delay(1000),
         tap(console.log)
       );
+  }
+
+  create(course: Course) {
+    return this.http.post(this.API, course).pipe(take(1));
   }
 }
