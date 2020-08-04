@@ -42,4 +42,8 @@ export class CoursesService {
   save(course: Course) {
     return course.id ? this.update(course) : this.create(course);
   }
+
+  remove(id) {
+    return this.http.delete(`${this.API}/${id}`).pipe(take(1));
+  }
 }
