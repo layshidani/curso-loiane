@@ -19,6 +19,14 @@
     {
       "nome": "Flutter",
       "id": 5
+    },
+    {
+      "id": 6,
+      "nome": "React"
+    },
+    {
+      "id": 7,
+      "nome": "Go Lang"
     }
   ]
 }
