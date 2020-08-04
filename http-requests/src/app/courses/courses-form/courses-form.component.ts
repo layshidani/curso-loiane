@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+
+import { map, switchMap } from 'rxjs/operators';
 
 import { CoursesService } from './../courses.service';
 import { AlertModalService } from './../../shared/alert-modal.service';
@@ -19,11 +22,42 @@ export class CoursesFormComponent implements OnInit {
     private service: CoursesService,
     private modal: AlertModalService,
     private location: Location,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
+
+    // this.route.params.subscribe(
+    //   (params: any) => {
+    //     const id = params['id'];
+    //     const course$ = this.service.loadByID(id);
+    //     course$.subscribe(course => {
+    //       this.updateForm(course);
+    //     });
+    //   }
+    // );
+
+    // não é necessário fazer unsubscribe neste caso, pois ao mudar de rota, o angular se encarrega da desinscrição
+
+    this.route.params
+      .pipe(
+        map((params: any) => params['id']),
+        switchMap(id => this.service.loadByID(id))
+      )
+      .subscribe(
+        (course) => this.updateForm(course)
+      );
+
     this.form = this.fb.group({
-      nome: [ null, [Validators.required, Validators.minLength(3), Validators.maxLength(250)] ]
+      id: [null],
+      nome: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(250)]]
+    });
+  }
+
+  updateForm(course) {
+    this.form.patchValue({
+      id: course.id,
+      nome: course.nome
     })
   }
 
@@ -39,7 +73,7 @@ export class CoursesFormComponent implements OnInit {
         success => {
           this.modal.showAlertSuccess('Curso criado :)');
           this.location.back();
-      },
+        },
         error => this.modal.showAlertDanger('Erro ao criar o curso. Tente novamente :/'),
         () => console.log('request completo')
       );

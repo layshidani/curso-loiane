@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, empty, Subject } from 'rxjs';
+import { Router, ActivatedRoute } from '@angular/router';
 import { catchError } from 'rxjs/operators';
 
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
@@ -21,6 +22,8 @@ export class CoursesListComponent implements OnInit {
   constructor(
     private service: CoursesService,
     private alertService: AlertModalService,
+    private router: Router,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
@@ -37,6 +40,10 @@ export class CoursesListComponent implements OnInit {
           return empty();
         })
       );
+  }
+
+  onEdit(id) {
+    this.router.navigate(['editar', id], { relativeTo: this.route });
   }
 
   handleError() {
