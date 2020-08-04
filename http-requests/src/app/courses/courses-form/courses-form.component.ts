@@ -26,40 +26,40 @@ export class CoursesFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    /* não é necessário fazer unsubscribe neste caso,
+    * pois ao mudar de rota,
+    * o angular se encarrega da desinscrição
+    */
 
-    // this.route.params.subscribe(
-    //   (params: any) => {
-    //     const id = params['id'];
-    //     const course$ = this.service.loadByID(id);
-    //     course$.subscribe(course => {
-    //       this.updateForm(course);
-    //     });
-    //   }
-    // );
+    // this.route.params
+    //   .pipe(
+    //     map((params: any) => params['id']),
+    //     switchMap(id => this.service.loadByID(id))
+    //   )
+    //   .subscribe(
+    //     (course) => this.updateForm(course)
+    //   );
 
-    // não é necessário fazer unsubscribe neste caso, pois ao mudar de rota, o angular se encarrega da desinscrição
+    /*
+    * ['course'] -> nome da variavel do resolve
+    * no courses-routing.module
+    * A linha de código abaixo substitui o código acima
+    */
 
-    this.route.params
-      .pipe(
-        map((params: any) => params['id']),
-        switchMap(id => this.service.loadByID(id))
-      )
-      .subscribe(
-        (course) => this.updateForm(course)
-      );
+    const course = this.route.snapshot.data['course'];
 
     this.form = this.fb.group({
-      id: [null],
-      nome: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(250)]]
+      id: [ course.id ],
+      nome: [course.nome, [Validators.required, Validators.minLength(3), Validators.maxLength(250)]]
     });
   }
 
-  updateForm(course) {
-    this.form.patchValue({
-      id: course.id,
-      nome: course.nome
-    })
-  }
+  // updateForm(course) {
+  //   this.form.patchValue({
+  //     id: course.id,
+  //     nome: course.nome
+  //   })
+  // }
 
   hasError(field: string) {
     return this.form.get(field).errors;
