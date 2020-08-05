@@ -14,6 +14,9 @@ export class FileUploadService {
     const formData = new FormData();
     files.forEach(file => formData.append('file', file, file.name));
 
-    return this.http.post(url, formData);
+    return this.http.post(url, formData, {
+      observe: 'events',
+      reportProgress: true
+    });
   }
 }
