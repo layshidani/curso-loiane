@@ -54,4 +54,18 @@ export class FileUploadComponent implements OnInit {
         .subscribe(res => console.log('Upload concluído'));
     }
   }
+
+  onDownloadExcel() {
+    this.service.download(`${environment.BASE_URL}/downloadExcel`)
+      .subscribe((res: any) => {
+        this.service.handleFile(res, 'report.xlsx');
+      });
+  }
+
+  onDownloadPDF() {
+    this.service.download(`${environment.BASE_URL}/downloadPDF`)
+      .subscribe((res: any) => {
+        this.service.handleFile(res, 'report.pdf');
+      });
+  }
 }
