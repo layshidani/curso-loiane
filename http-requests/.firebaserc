@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "http-angular-loiane"
+  },
+  "targets": {
+    "http-angular-loiane": {
+      "hosting": {
+        "http-requests": [
+          "http-angular-loiane"
+        ]
+      }
+    }
   }
 }

@@ -126,6 +126,10 @@
               "devServerTarget": "http-requests:serve:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {}
         }
       }
     }
